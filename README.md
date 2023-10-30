@@ -4,7 +4,6 @@
 ```sh
 import socket
 
-
 # Define function
 def get_and_display_html(url):
     # Extract the host and path from the URL
@@ -41,10 +40,6 @@ def get_and_display_html(url):
 
     finally:
         client_socket.close()
-
-
-
-
 ```
 * Run code:
 
@@ -63,7 +58,6 @@ get_and_display_html("www.cit.ctu.edu.vn")
 ```sh
 import socket
 
-
 def convert_to_word(data):
     conversion_dict = {
         '0': "zero",
@@ -79,7 +73,6 @@ def convert_to_word(data):
     }
 
     return conversion_dict.get(data, "Not an integer")
-
 
 def main():
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -98,16 +91,13 @@ def main():
 
         client_socket.close()
 
-
 if __name__ == "__main__":
     main()
-
 ```
 
 * Client:
 ```sh
 import socket
-
 
 def main():
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -124,10 +114,8 @@ def main():
 
     client_socket.close()
 
-
 if __name__ == "__main__":
     main()
-
 ```
 
 * Result:
@@ -182,7 +170,6 @@ while True:
             UDPServerSocket.sendto("Invalid format. Use 'Operand1 Operator Operand2' format.".encode('utf-8'), address)
     except (ValueError, IndexError):
         UDPServerSocket.sendto("Invalid format. Use 'Operand1 Operator Operand2' format.".encode('utf-8'), address)
-
 ```
 
 * Client:
@@ -211,7 +198,6 @@ while True:
         print(f"Server response: {response.decode('utf-8')}")
     except ValueError:
         print("Invalid input. Use 'Operand1 Operator Operand2' format.")
-
 ```
 
 * Result:
@@ -282,7 +268,6 @@ while True:
             print('Folder not found:', filename)
     conn.close()
     conn1.close()
-
 ```
 
 * Client:
@@ -292,7 +277,6 @@ import socket
 HOST = 'localhost'
 PORT = 8000
 PORT1 = 8001
-
 
 def handle_get():
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -321,7 +305,6 @@ def handle_get():
     else:
         print("Server on port 8000 Response:", response)
 
-
 def handle_delete():
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client.connect((HOST, PORT))
@@ -339,7 +322,6 @@ def handle_delete():
         print("File has been deleted on the server")
     else:
         print("Server on port 8000 Response:", response)
-
 
 def handle_list():
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -364,7 +346,6 @@ def handle_list():
     else:
         print("Server on port 8000 Response:", response)
 
-
 test = True
 while test:
     print("Press 1 to choose the GET function\n")
@@ -380,7 +361,6 @@ while test:
     if a == '':
         test = False
         print("End of work session")
-
 ```
 
 ## Method GET:
