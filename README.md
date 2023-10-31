@@ -211,7 +211,7 @@ while True:
 import socket
 import os
 
-HOST = 'localhost'
+HOST = "localhost"
 PORT = 8000
 PORT1 = 8001
 
@@ -224,57 +224,57 @@ server1.bind((HOST, PORT1))
 server.listen(1)
 server1.listen(1)
 
-print('Server on port 8000 is ready to accept connections')
+print("Server on port 8000 is ready to accept connections")
 
 while True:
     conn, add = server.accept()
     conn1, add1 = server1.accept()
 
-    request = conn.recv(1024).decode('utf-8')
+    request = conn.recv(1024).decode("utf-8")
     filename = request.split()[1]
     method = request.split()[0]
 
-    if method == 'GET':
+    if method == "GET":
         if os.path.isfile("server_storage/" + filename):
-            conn.send(b'OK\n')
-            with open("server_storage/" + filename, 'r') as f:
+            conn.send(b"OK\n")
+            with open("server_storage/" + filename, "r") as f:
                 data = f.read()
-                conn1.send(data.encode('utf-8'))
-            print('File sent to', add)
-            print('Content:', data)
+                conn1.send(data.encode("utf-8"))
+            print("File sent to", add)
+            print("Content:", data)
         else:
-            print('File not found:', filename)
-            conn.send(b'ERROR\n')
+            print("File not found:", filename)
+            conn.send(b"ERROR\n")
 
-    if method == 'DELETE':
+    if method == "DELETE":
         file_path = os.path.join("server_storage", filename)
         if os.path.isfile(file_path):
-            conn.send(b'OK\n')
+            conn.send(b"OK\n")
             os.remove(file_path)
             print("File", filename, "has been deleted from the server's server_storage directory")
         else:
-            conn.send(b'ERROR\n')
-            print('File not found:', filename)
+            conn.send(b"ERROR\n")
+            print("File not found:", filename)
 
-    if method == 'LIST':
+    if method == "LIST":
         if os.path.isdir(filename):
-            conn.send(b'OK\n')
+            conn.send(b"OK\n")
             files = os.listdir(filename)
             print(files)
-            data = (str(files).encode('utf-8'))
+            data = (str(files).encode("utf-8"))
             conn1.send(data)
         else:
-            conn.send('ERROR\n'.encode('utf-8'))
-            print('Folder not found:', filename)
+            conn.send("ERROR\n".encode("utf-8"))
+            print("Folder not found:", filename)
     conn.close()
     conn1.close()
 ```
 
-* Client:
+* Client - GET function:
 ```sh
 import socket
 
-HOST = 'localhost'
+HOST = "localhost"
 PORT = 8000
 PORT1 = 8001
 
@@ -285,26 +285,30 @@ def handle_get():
     client1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client1.connect((HOST, PORT1))
 
-    filename = input('Enter the name of the file to retrieve: ')
-    request = 'GET ' + filename
-    client.send(request.encode('utf-8'))
+    filename = input("\nEnter the name of the file to retrieve: ")
+    request = "GET " + filename
+    client.send(request.encode("utf-8"))
 
-    response = client.recv(1024).decode('utf-8')
+    response = client.recv(1024).decode("utf-8")
 
-    if response == 'OK\n':
-        with open(filename, 'w') as f:
+    if response == "OK\n":
+        with open(f"client_storage/{filename}", "w") as serverFile:
             while True:
                 data = client1.recv(1024)
                 if not data:
                     break
-                f.write(data.decode('utf-8'))
-        print('File received and saved:', filename)
-        with open(filename, 'r') as a:
-            contents = a.read()
-            print("File contents:", contents, "\n")
+                serverFile.write(data.decode("utf-8"))
+        print(f"\nFile received and saved in client_storage directory: {filename}")
+        with open(f"client_storage/{filename}", "r") as clientFile:
+            contents = clientFile.read()
+            print(f"\nFile contents: {contents}")
     else:
         print("Server on port 8000 Response:", response)
+```
 
+* Client - DELETE function:
+```sh
+...
 def handle_delete():
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client.connect((HOST, PORT))
@@ -312,17 +316,22 @@ def handle_delete():
     client1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client1.connect((HOST, PORT1))
 
-    filename = input('Enter the name of the file to delete: ')
-    request = 'DELETE ' + filename
-    client.send(request.encode('utf-8'))
+    filename = input("\nEnter the name of the file to delete: ")
+    request = "DELETE " + filename
+    client.send(request.encode("utf-8"))
 
-    response = client.recv(1024).decode('utf-8')
+    response = client.recv(1024).decode("utf-8")
 
-    if response == 'OK\n':
-        print("File has been deleted on the server")
+    if response == "OK\n":
+        print("\nFile has been deleted on the server")
     else:
         print("Server on port 8000 Response:", response)
+...
+```
 
+* Client - LIST function:
+```sh
+...
 def handle_list():
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client.connect((HOST, PORT))
@@ -330,53 +339,58 @@ def handle_list():
     client1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client1.connect((HOST, PORT1))
 
-    filename = input('Enter the folder name: ')
-    request = 'LIST ' + filename
-    client.send(request.encode('utf-8'))
+    filename = input("\nEnter the folder name: ")
+    request = "LIST " + filename
+    client.send(request.encode("utf-8"))
 
-    response = client.recv(1024).decode('utf-8')
+    response = client.recv(1024).decode("utf-8")
 
-    if response == 'OK\n':
+    if response == "OK\n":
         file = client1.recv(1024)
-        array = eval(file.decode('utf-8'))
-        print("Files in ", filename, "are:")
-        for f in array:
-            print(f)
-        print("\n")
+        array = eval(file.decode("utf-8"))
+        file_list = ', '.join(array)
+        print(f'\nFiles in the {filename} directory are: {file_list}\n')
     else:
         print("Server on port 8000 Response:", response)
+...
+```
 
+* Client - Get user option:
+```sh
+...
 test = True
 while test:
+    print('\n' + '-' * 40 + '\n')
     print("Press 1 to choose the GET function\n")
     print("Press 2 to choose the DELETE function\n")
-    print("Press 3 to choose the LIST function\n")
+    print("Press 3 to choose the LIST function")
+    print('\n' + '-' * 40 + '\n')
     a = (input("Choose one of the three functions to perform: "))
-    if a == '1':
+    if a == "1":
         handle_get()
-    if a == '2':
+    if a == "2":
         handle_delete()
-    if a == '3':
+    if a == "3":
         handle_list()
-    if a == '':
+    if a == "":
         test = False
         print("End of work session")
 ```
 
 ## Method GET:
 ### Client request:
-![client](ex4/4-1.png)
+![client](ex4/)
 ### Server response:
-![server](ex4/4-2.png)
+![server](ex4/)
 
 ## Method LIST:
 ### Client request:
-![client](ex4/4-3.png)
+![client](ex4/)
 ### Server response:
-![server](ex4/4-4.png)
+![server](ex4/)
 
 ## Method DELETE:
 ### Client request:
-![client](ex4/4-5.png)
+![client](ex4/)
 ### Server response:
-![server](ex4/4-6.png)
+![server](ex4/)
