@@ -126,7 +126,7 @@ if __name__ == "__main__":
 ## Exercise 3
 
 * Server:
-```sh
+```shell
 import socket
 
 localIP = "127.0.0.1"
@@ -170,10 +170,10 @@ while True:
 
             UDPServerSocket.sendto(str(result).encode('utf-8'), address)
         else:
-            UDPServerSocket.sendto("Invalid format. Use 'Operand1 Operator Operand2' format.".encode('utf-8'),
+            UDPServerSocket.sendto("Invalid format. Use 'Operand1 Operator Operand2'.".encode('utf-8'),
                                    address)
     except (ValueError, IndexError):
-        UDPServerSocket.sendto("Invalid format. Use 'Operand1 Operator Operand2' format.".encode('utf-8'),
+        UDPServerSocket.sendto("Invalid format. Use 'Operand1 Operator Operand2'.".encode('utf-8'),
                                address)
 ```
 
