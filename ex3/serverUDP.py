@@ -20,7 +20,10 @@ while True:
 
         result = 0
 
-        if len(parts) == 3 and parts[0] in ('+', '-', '*', '/') and parts[1].isdigit() and parts[2].isdigit():
+        if (len(parts) == 3
+                and parts[0] in ('+', '-', '*', '/')
+                and parts[1].isdigit()
+                and parts[2].isdigit()):
             operand1, operator, operand2 = int(parts[1]), parts[0], int(parts[2])
 
             if operator == '+':
@@ -38,6 +41,8 @@ while True:
 
             UDPServerSocket.sendto(str(result).encode('utf-8'), address)
         else:
-            UDPServerSocket.sendto("Invalid format. Use 'Operand1 Operator Operand2' format.".encode('utf-8'), address)
+            UDPServerSocket.sendto("Invalid format. Use 'Operand1 Operator Operand2' format.".encode('utf-8'),
+                                   address)
     except (ValueError, IndexError):
-        UDPServerSocket.sendto("Invalid format. Use 'Operand1 Operator Operand2' format.".encode('utf-8'), address)
+        UDPServerSocket.sendto("Invalid format. Use 'Operand1 Operator Operand2' format.".encode('utf-8'),
+                               address)
