@@ -40,4 +40,4 @@ def get_and_display_html(url):
 
 
 # Run function
-get_and_display_html("www.cit.ctu.edu.vn")
+get_and_display_html("http://streamhd4k.com")

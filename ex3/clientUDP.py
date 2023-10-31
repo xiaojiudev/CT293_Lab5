@@ -19,6 +19,6 @@ while True:
         UDPClientSocket.sendto(message, serverAddressPort)
 
         response, _ = UDPClientSocket.recvfrom(bufferSize)
-        print(f"Server response: {response.decode('utf-8')}")
+        print(f"\nServer response: {response.decode('utf-8')}\n")
     except ValueError:
-        print("Invalid input. Use 'Operand1 Operator Operand2' format.")
+        print("Invalid input. Use 'Operand1 Operator Operand2' format.\n")

@@ -1,7 +1,7 @@
 ## Exercise 1
-* Code:
-
-```sh
+### Code:
+* ex1.py:
+```shell
 import socket
 
 # Define function
@@ -40,21 +40,18 @@ def get_and_display_html(url):
 
     finally:
         client_socket.close()
-```
-* Run code:
 
-```sh
 # Run function
-get_and_display_html("www.cit.ctu.edu.vn")
+get_and_display_html("http://streamhd4k.com")
 ```
 
-* Result:
+### Result:
 
-![Ex1](ex1/1-1.png)
+![Ex1](ex1/img/1-1.png)
 
 ## Exercise 2
-
-* Server:
+### Code:
+* serverTCP.py:
 ```sh
 import socket
 
@@ -95,8 +92,8 @@ if __name__ == "__main__":
     main()
 ```
 
-* Client:
-```sh
+* clientTCP.py:
+```shell
 import socket
 
 def main():
@@ -108,9 +105,9 @@ def main():
     if len(user_input) == 1 and user_input.isnumeric():
         client_socket.send(user_input.encode())
         response = client_socket.recv(1024).decode()
-        print(f"Server response: {response}")
+        print(f"\nServer response: {response}")
     else:
-        print("Invalid input. Please enter a single numeric character (0-9).")
+        print("\nInvalid input. Please enter a single numeric character (0-9).")
 
     client_socket.close()
 
@@ -118,14 +115,15 @@ if __name__ == "__main__":
     main()
 ```
 
-* Result:
-![server](ex2/2-2.png)
-![client](ex2/2-1.png)
-
+### Result:
+* clientTCP.py:
+![client](ex2/img/2-1.png)
+* serverTCP.py:
+![server](ex2/img/2-2.png)
 
 ## Exercise 3
-
-* Server:
+### Code:
+* serverUDP.py:
 ```shell
 import socket
 
@@ -177,8 +175,8 @@ while True:
                                address)
 ```
 
-* Client:
-```sh
+* clientUDP.py:
+```shell
 import socket
 
 serverAddressPort = ("127.0.0.1", 20001)
@@ -200,18 +198,20 @@ while True:
         UDPClientSocket.sendto(message, serverAddressPort)
 
         response, _ = UDPClientSocket.recvfrom(bufferSize)
-        print(f"Server response: {response.decode('utf-8')}")
+        print(f"\nServer response: {response.decode('utf-8')}\n")
     except ValueError:
-        print("Invalid input. Use 'Operand1 Operator Operand2' format.")
+        print("Invalid input. Use 'Operand1 Operator Operand2' format.\n")
 ```
 
-* Result:
-![server](ex3/3-1.png)
-![client](ex3/3-2.png)
+### Result:
+* clientUDP.py:
+![client](ex3/img/3-1.png)
+* serverUDP.py
+![server](ex3/img/3-2.png)
 
 ## Exercise 4
-
-* Server:
+### Code:
+* server.py:
 ```sh
 import socket
 import os
@@ -275,7 +275,7 @@ while True:
     conn1.close()
 ```
 
-* Client - GET function:
+* client.py - GET function:
 ```sh
 import socket
 
@@ -311,7 +311,7 @@ def handle_get():
         print("Server on port 8000 Response:", response)
 ```
 
-* Client - DELETE function:
+* client.py - DELETE function:
 ```sh
 ...
 def handle_delete():
@@ -334,7 +334,7 @@ def handle_delete():
 ...
 ```
 
-* Client - LIST function:
+* client.py - LIST function:
 ```sh
 ...
 def handle_list():
@@ -360,7 +360,7 @@ def handle_list():
 ...
 ```
 
-* Client - Get user option:
+* client.py - Get user option:
 ```sh
 ...
 test = True
@@ -382,20 +382,28 @@ while test:
         print("End of work session")
 ```
 
-## Method GET:
-### Client request:
-![client](ex4/)
-### Server response:
-![server](ex4/)
+### Result:
+#### Method GET:
+* client.py:
+![client](ex4/img/GET_4_1.png)
+* server.py:
+![server](ex4/img/GET_4_2.png)
+* server_storage directory:
+![server](ex4/img/4_8.png)
 
-## Method LIST:
-### Client request:
-![client](ex4/)
-### Server response:
-![server](ex4/)
+#### Method LIST:
+* client.py:
+![client](ex4/img/LIST_4_3.png)
+* server.py:
+![server](ex4/img/LIST_4_4.png)
 
-## Method DELETE:
-### Client request:
-![client](ex4/)
-### Server response:
-![server](ex4/)
+#### Method DELETE:
+* client.py:
+![client](ex4/img/DELETE_4_5.png)
+* server.py:
+![server](ex4/img/DELETE_4_6.png)
+* server_storage directory
+![server](ex4/img/4_9.png)
+
+#### FOLDER_STRUCTURE
+![server](ex4/img/4_7.png)

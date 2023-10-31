@@ -10,9 +10,9 @@ def main():
     if len(user_input) == 1 and user_input.isnumeric():
         client_socket.send(user_input.encode())
         response = client_socket.recv(1024).decode()
-        print(f"Server response: {response}")
+        print(f"\nServer response: {response}")
     else:
-        print("Invalid input. Please enter a single numeric character (0-9).")
+        print("\nInvalid input. Please enter a single numeric character (0-9).")
 
     client_socket.close()
 
